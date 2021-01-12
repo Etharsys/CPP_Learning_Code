@@ -13,31 +13,32 @@ void                         translate(vector<string>& sentence, vector<pair<str
 
 int main(int argc, char** argv)
 {
-    const char* dict_path, word, translation, sentence;
+    string dict_path, word, translation;
+    vector<string> sentence;
 
-    if (!parse_params(argc, argv, dict_path, translation, sentence))
+    if (!parse_params(argc, argv, dict_path, word, translation, sentence))
     {
         return -1;
     }
 
     vector<pair<string, string>> dict;
 
-    if (dict_path)
+    if (dict_path != "")
     {
         dict = open_dictionary(dict_path);
     }
 
-    if (word && translation)
+    if (word != "" && translation != "")
     {
         dict.emplace_back(word, translation);
 
-        if (dict_path)
+        if (dict_path != "")
         {
             save_dictionary(dict_path, dict);
         }
     }
 
-    if (sentence)
+    if (sentence.size() != 0)
     {
         translate(sentence, dict);
     }
@@ -45,7 +46,7 @@ int main(int argc, char** argv)
     return 0;
 }
 
-bool parse_params(int argc, char** argv, string& dict_path, string& word, string& translation, vector<string> sentence)
+bool parse_params(int argc, char** argv, string& dict_path, string& word, string& translation, vector<string>& sentence)
 {
     for (auto i = 1; i < argc; ++i)
     {
@@ -75,7 +76,7 @@ bool parse_params(int argc, char** argv, string& dict_path, string& word, string
     return true;
 }
 
-vector<pair<string, string>> open_dictionary(char* path)
+vector<pair<string, string>> open_dictionary(const string& path)
 {
     vector<pair<string, string>> dict;
 
@@ -96,7 +97,7 @@ vector<pair<string, string>> open_dictionary(char* path)
     return dict;
 }
 
-void save_dictionary(char* path, vector<pair<string, string>> dict)
+void save_dictionary(const string& path, const vector<pair<string, string>>& dict)
 {
     fstream file { path, ios_base::out };
 
@@ -106,7 +107,7 @@ void save_dictionary(char* path, vector<pair<string, string>> dict)
     }
 }
 
-void translate(vector<string>& sentence, vector<pair<string, string>> dict)
+void translate(const vector<string>& sentence, const vector<pair<string, string>> dict)
 {
     for (auto word : sentence)
     {
