@@ -1,0 +1,48 @@
+EXERCICE 1:
+
+1) pro/cons language compilé (C, C++) ou simi (java) comparé à interprété (python) ? : pro : exe plus rapide + erreur de compil, cons : exe non portable (à recompiler)
+
+2) dif. erreurs compil et exec ? :  compil empêche le code éxecutable de se produire, exec au moment de l'exécution du programme il y a un problème
+
+3) undefined behavior, compil (si oui que peut il se passer) ? : oui, on peut avoir une erreur d'exécution ou un comportement non voulu du programme
+        -> pas défini dans le standart ...
+
+
+EXERCICE 2:
+
+1) 
+    short s0; //oui 
+    int   i1 = 2; //oui
+    bool  b2{false}; //oui
+    bool  b3{i1}; //oui //non : int to bool
+    bool* b4; //oui
+    unsigned       u5{0x10}; //oui
+    unsigned short us6 = -10; //oui
+    unsigned long  ul7{b3 + u5 + us6}; //oui
+    char c8{"a"}; //non const char* to char
+    char c9 = -10; //oui
+    double  d10{i1}; //oui //non int to double
+    double* d11{d10}; //non double to double*
+    double& d12; //non ref non init
+    const double d13{.0f}; //oui
+    const int    i14 = i1; //oui
+    int* i15 = &i1; //oui
+    int* i16 = &b2; //non bool* to int*
+    int  i17 = *i15; //oui
+    int& i18{i14}; //non int& to const int
+    const int* i19{nullptr}; //oui
+    const bool b20; //non non-init
+
+2) s0 = 0, *i15 = 2, ul7 = 1 + 10 - 10 = 1
+
+
+EXERCICE 3:
+
+2) valeur : fait une copie de la variable, type primitif dont on souhaite juste la valeur de l'entrée (pas à modifié)
+   référence : passe la variable directement, quand on souhaite modifié la variable dans la fonction
+   référence constante : passe l'adresse de la variable, quand on ne souhaite pas modifié la variable mais type classe (plus efficace)
+
+3) unsigned int count_a_occurences(const std::string& s);
+   void         update_loop(float dt, std::string& errors_out);
+   bool         are_all_positives(const std::vector<int>& values, std::vector<unsigned int>& negatives);
+   std::string  concatenate(const std::string& str1, const std::string& str2);
