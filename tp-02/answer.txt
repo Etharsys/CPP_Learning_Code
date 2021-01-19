@@ -1,0 +1,14 @@
+= EXERCICE 1 =
+
+1) 17 
+   17
+2) ça plante
+
+
+= EXERCICE 2 =
+
+3) plus de contructeur Histogram { Histogram ... } Ah !!! Compile plus!
+
+
+= EXERCICE 3 =
+
