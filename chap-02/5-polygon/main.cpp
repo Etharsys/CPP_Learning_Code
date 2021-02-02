@@ -16,7 +16,11 @@ int main()
 
     polygon.add_vertex(8, 9); //-var-create: unable to create variable object
     
+<<<<<<< HEAD
     std::cout << vertex.first << " " << vertex.second << std::endl; // -> ???
+=======
+    // std::cout << "(" << vertex.first << "," << vertex.second << ")" << std::endl; //-> ???
+>>>>>>> upstream/master
 
     return 0;
 }
