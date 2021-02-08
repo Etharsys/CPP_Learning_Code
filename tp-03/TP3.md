@@ -6,19 +6,21 @@
 
 | conteneur    | insertion (en tête / en fin) | suppression (en tête / en fin) | accès |
 |--------------|-----------|----------|-----------|
-| array        | N/A       | N/A      |           |
-| vector       |           |          |           |
-| deque        |           |          |           |
-| forward_list |           |          |           |
-| list         |           |          |           |
-| set          |           |          |           |
-| unordered_set|           |          |           |
+| array        | N/A       | N/A      | constant  |
+| vector       | linear    | linear   | constant  |
+| deque        | constant  | constant | constant  |
+| forward_list | constant  | constant | constant  |
+| list         | constant  | constant | constant  |
+| set          | log       | log      | log       |
+| unordered_set| linear    | linear   | linear    |
 
 2. Supposons que vous avez récupéré un itérateur sur un élément d'un conteneur avec : `auto it = std::find(c.begin(), c.end(), element_to_find)`.
 En fonction du type de conteneur, quelles sont les opérations succeptibles d'invalider cet itérateur ? Essayez d'être précis dans vos réponses.\
 Exemple : Si `c` est un `std::vector`, alors `it` peut être invalidé en cas de suppression d'un élément précédant `it` dans le conteneur.
+Si le conteneur change de capacité (insert, push_back), si le conteneur est supprimé/réafecté (avec operator=...).
 
 3. Quelle est la différence entre les fonctions `push_back` et `emplace_back` de la classe `std::vector<std::string>` ?
+-> push ajoute un élément déjà construit, emplace le construit et l'ajoute.
 
 4. Dans le code suivant, la classe `RelativePoint` modélise un point en 2D, dont la position est relative à celle d'un point d'origine.
 Pourquoi est-ce que l'expression `std::vector<RelativePoint>(3)` ne compile pas, alors que `std::vector<AbsolutePoint>(3)` compile ?\
@@ -41,10 +43,16 @@ public:
     _shift { shift }
   {}
 
+  //MORE
+  RelativePoint()
+    : RelativePoint(AbsolutePoint())
+  {}
+
   double get_x() const { return _origin.x + _shift.x; }
   double get_y() const { return _origin.y + _shift.y; }
 };
 ```
+
 
 5. [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)\
 Remplissez un `std::vector<unsigned long>` avec les nombres allant de 2 à 100'000. Ensuite, pour chaque entier `x` tel que `x² <= 100'000`, supprimez du tableau tous les entiers divisibles par `x`, excepté `x` lui-même. Les nombres restants dans le tableau devraient correspondre à tous les nombres premiers compris entre 2 et 100'000.\
@@ -89,13 +97,14 @@ int main() {
 Vous allez implémenter un annuaire téléphonique (comme le gros bottin qui traîne sur une étagère chez vos grand-parents).
 
 L'intérêt de l'annuaire, c'est que vous pouvez y rechercher facilement les numéros de téléphone de vos amis et ennemis, dès lors que vous connaissez leur
-nom et prénom. Le bottin étant trié par ordre alphabétique, quelle est la complexité de la recherche d'une personne dedans ?
+nom et prénom. Le bottin étant trié par ordre alphabétique, quelle est la complexité de la recherche d'une personne dedans ? dichotomie donc logarithmique
 Afin d'avoir cette même complexité dans votre programme, quel conteneur pouvez-vous utiliser pour stocker les entrées de l'annuaire ? 
+un set dont les clés sont des pair<nom, prenom> et les valeurs les numéros
 
 Vous aurez également besoin de modéliser un numéro de téléphone, qui correspond à une série de 5 nombres entiers.
-Quel est le conteneur le plus adapté pour représenter cet objet ?
+Quel est le conteneur le plus adapté pour représenter cet objet ? un array de taille 5
 
-Une fois que vous aurez répondu aux questions ci-dessus, vous pourrez commencer à implémentez les classes modélisant la situation.
+Une fois que vous aurez répondu aux questions ci-dessus, vous pourrez commencer à implémentez les classes modélisant la situation. 
 
 Comme on est gentils, nous vous avons défini les fonctions de tests permettant de vérifier que votre API fonctionne.
 Activez ces tests l'un après l'autre, afin d'implémenter vos classes et leurs fonctionnalités au-fur-et-à-mesure, en vérifiant à chaque étape que le code que vous

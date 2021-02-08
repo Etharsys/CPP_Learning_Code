@@ -7,6 +7,10 @@
 #include <sstream>
 #include <string>
 
+#include "PhoneNumber.h"
+#include "Person.h"
+#include "PhoneBook.h"
+
 int main()
 {
     t1_phone_number_validity();
