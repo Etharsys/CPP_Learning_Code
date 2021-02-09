@@ -26,3 +26,7 @@ add_executable(c4-3-vehicles
     3-vehicles/Scooter.h
     3-vehicles/Vehicle.h
 )
+
+add_executable(c4-test
+    test.cpp
+)
