@@ -24,8 +24,10 @@ public:
 
 	void set_position(int position)
 	{
-		position = _position;
+		_position = position;
 	}
+
+	std::string getName () const { return _name; }
 
 private:
 	const std::string _name;

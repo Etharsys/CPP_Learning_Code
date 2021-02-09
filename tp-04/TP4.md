@@ -5,23 +5,25 @@
 Le code initial de l'exercice est dans tp-04/PhoneCalls.
 
 1. Regardez le contenu de la classe `Phone`.\
-Conceptuellement, quelle est la différence entre un attribut de type `const Person` et un attribut de type `const Person&` ?\
+Conceptuellement, quelle est la différence entre un attribut de type `const Person` et un attribut de type `const Person&` ?\ 
+const Person  : copy
+const Person& : passe juste la référence (quand l'object ne fait pas partie de toi !!!)
 En pratique, qu'est-ce que cela change de stocker un attribut par référence ? Par exemple, quelle sera la position de `phone._owner` après l'exécution des instructions ci-dessous ?
 ```cpp
 Person paul { "Paul", 3 };
 Phone  phone { paul };
 paul.set_position(8);
-```
+``` bah 8
 
 2. Créez une classe `HomePhone` qui hérite de `Phone`. Ajoutez le nécessaire pour que le code ci-dessous compile.
 ```cpp
 Person paul { "Paul", 3 };
 HomePhone phone { paul };
 phone.ring();
-```
+``` cf le code ki marche
 
 3. Ajoutez un attribut `_position` à `HomePhone`. Faitez ensuite en sorte que, lorsque vous appelez la fonction `ring` sur un `HomePhone`, si le propriétaire
-n'est pas à la même position que le téléphone, le programme affiche le message "This is the voicemail of ... Please leave a message.". 
+n-est pas à la même position que le téléphone, le programme affiche le message "This is the voicemail of ... Please leave a message.". 
 ```cpp
 Person paul { "Paul", 3 };
 
@@ -40,13 +42,13 @@ HomePhone far_phone { paul, -10 };
 
 const Phone& normal_phone = far_phone;
 normal_phone.ring();				// This is the voicemail of Paul. Please leave a message.
-```
+``` oué trop fort !
 
 5. Le programme a appelé la fonction `HomePhone::ring` sur une référence de type `Phone`.\
-Par quel terme désigne-t-on ce genre d'appel ?
-Comment appelle-t-on les classes sur lesquelles on peut effectuer un appel de ce type ?
-Que faut-il toujours faire lorsqu'on définit ce type de classe et pourquoi ?\
-Si vous n'avez pas pensé à le faire, c'est le moment de vous rattraper.
+Par quel terme désigne-t-on ce genre d'appel ? appel virtuels
+Comment appelle-t-on les classes sur lesquelles on peut effectuer un appel de ce type ? les classes polymorphe
+Que faut-il toujours faire lorsqu-on définit ce type de classe et pourquoi ?\ destructeur virtuel
+Si vous n-avez pas pensé à le faire, c-est le moment de vous rattraper : ^^
 
 6. Créez une nouvelle classe `MobilePhone`, de manière à pouvoir écrire :
 ```cpp
@@ -61,7 +63,7 @@ normal_phone.ring();				// Hi! Paul on the phone.
 ```cpp
 Person paul { "Paul", 3 };
 Phone normal_phone { paul };		// Doesn't compile!
-```
+``` on met package la classe Phone
 
 8. Est-ce que le code suivant compile ? Cela vous paraît-il normal ? Comment pouvez-vous expliquer ce résultat ?
 ```cpp
@@ -70,10 +72,11 @@ HomePhone far_phone { paul, -10 };
 
 const Phone normal_phone = far_phone;
 normal_phone.ring();
-```
+``` non, oui vu que la méthode ring est aussi protected...
 
 9. En C++, que faut-il faire pour être tout à fait sûr qu'une classe ne puisse plus être instanciée du tout ?\
 Modifiez la déclaration de `Phone::ring` pour que `Phone` ne soit plus instanciable. Comment appelle-t-on ce type de classe ?
+rendre toute les fonctions virtuelle ure : classe virtuel pure
 
 10. Pourquoi le code ci-dessous ne compile probablement plus ?
 Effectuez les modifications permettant de réinstancier des objets de type `MobilePhone`, si vous ne l'aviez pas fait à la question précédente.
