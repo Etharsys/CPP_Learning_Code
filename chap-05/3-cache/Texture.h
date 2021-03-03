@@ -10,7 +10,7 @@
 class Texture
 {
 public:
-    static std::unique_ptr<Texture> Load(std::string_view name)
+    static std::shared_ptr<Texture> Load(std::string_view name)
     {
         std::cout << "Texture width: ";
         std::cout.flush();
@@ -24,8 +24,10 @@ public:
         int height = 0;
         std::cin >> height;
 
-        return std::make_unique<Texture>(name, width, height);
+        return std::make_shared<Texture>(name, width, height);
     }
+
+    const std::string& get_name() const { return _name; }
 
     static unsigned int Count() { return _count; }
 

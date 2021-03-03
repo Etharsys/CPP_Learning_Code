@@ -7,6 +7,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <vector>
 
 class Model
 {
@@ -34,7 +35,7 @@ public:
         unsigned int count = 0u;
         std::cin >> count;
 
-        std::vector<std::unique_ptr<Texture>> textures;
+        std::vector<std::shared_ptr<Texture>> textures;
 
         while (count-- > 0u)
         {
@@ -44,10 +45,26 @@ public:
             std::string texture;
             std::cin >> texture;
 
-            textures.push_back(Texture::Load(texture));
+            textures.push_back(FindOrLoadTexture(models, texture));
         }
 
         models.emplace_hint(it, name, std::make_unique<Model>(name, std::move(textures)));
+    }
+
+    static std::shared_ptr<Texture> FindOrLoadTexture(const Container& models, const std::string& name)
+    {
+        for (const auto& [_, model] : models)
+        {
+            for (const auto& texture : model->_textures)
+            {
+                if (texture->get_name() == name)
+                {
+                    return texture;
+                }
+            }
+        }
+
+        return Texture::Load(name);
     }
 
     static void Destroy(Container& models)
@@ -64,7 +81,7 @@ public:
         }
     }
 
-    Model(std::string_view name, std::vector<std::unique_ptr<Texture>> textures)
+    Model(std::string_view name, std::vector<std::shared_ptr<Texture>> textures)
         : _name { name }
         , _textures { std::move(textures) }
     {
@@ -83,5 +100,5 @@ public:
 
 private:
     std::string _name;
-    std::vector<std::unique_ptr<Texture>> _textures;
+    std::vector<std::shared_ptr<Texture>> _textures;
 };

@@ -102,6 +102,25 @@ int main()
                 }
             }
         }
+        else if (command == "r")
+        {
+            std::string name;
+            std::cin >> name;
+
+            const auto teacher = std::find(teachers.begin(), teachers.end(), name);
+            if (teacher == teachers.end()) {
+                continue;
+            }
+
+            auto* teacher_ref = *teacher;
+            for (auto* subject : subjects)
+            {
+                subject->remove_teacher(*teacher_ref);
+            }
+
+            teachers.erase(teacher);
+            delete teacher_ref;
+        }
     }
 
     for (auto* teacher : teachers)

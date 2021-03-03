@@ -8,23 +8,23 @@
 class Pokedex
 {
 public:
-    void add(const Pokemon* pokemon)
+    void add(const Pokemon& pokemon)
     {
-        _pokemons.emplace_back(pokemon);
+        _pokemons.emplace_back(&pokemon);
     }
 
-    void remove(const Pokemon* pokemon)
+    void remove(const Pokemon& pokemon)
     {
-        auto it = std::find(_pokemons.begin(), _pokemons.end(), pokemon);
+        auto it = std::find(_pokemons.begin(), _pokemons.end(), &pokemon);
         if (it != _pokemons.end())
         {
             _pokemons.erase(it);
         }
     }
 
-    bool has_duplicate(const Pokemon* pokemon) const
+    bool has_duplicate(const Pokemon& pokemon) const
     {
-        auto it = std::find(_pokemons.begin(), _pokemons.end(), pokemon->get_name());
+        auto it = std::find(_pokemons.begin(), _pokemons.end(), pokemon.get_name());
         return (it != _pokemons.end());
     }
 
